@@ -135,4 +135,30 @@ public class DarshanSlotService {
                         new IllegalArgumentException(
                                 "Darshan slot not found"));
     }
+
+
+    @Transactional
+    public Booking cancelBooking(Long bookingId) {
+
+        Booking booking = bookingRepository.findByIdForUpdate(bookingId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Booking not found"));
+
+        if (booking.isCancelled()) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Booking is already cancelled");
+        }
+
+        DarshanSlot slot = repository.findByIdForUpdate(
+                        booking.getSlot().getId())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Darshan slot not found"));
+
+        booking.setCancelled(true);
+        slot.setBookedCount(slot.getBookedCount() - 1);
+
+        return bookingRepository.save(booking);
+    }
+
 }
