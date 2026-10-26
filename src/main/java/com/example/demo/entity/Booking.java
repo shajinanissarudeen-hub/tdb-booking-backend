@@ -1,12 +1,7 @@
 
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Booking {
@@ -19,6 +14,9 @@ public class Booking {
     private String phoneNumber;
 
     private boolean cancelled = false;
+
+    @Column(unique = true)
+    private String receiptNumber;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "slot_id", nullable = false)
@@ -61,5 +59,13 @@ public class Booking {
 
     public void setSlot(DarshanSlot slot) {
         this.slot = slot;
+    }
+
+    public String getReceiptNumber() {
+        return receiptNumber;
+    }
+
+    public void setReceiptNumber(String receiptNumber) {
+        this.receiptNumber = receiptNumber;
     }
 }
