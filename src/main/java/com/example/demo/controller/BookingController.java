@@ -22,7 +22,9 @@ public class BookingController {
     @ResponseStatus(HttpStatus.CREATED)
     public Booking createBooking(
             @PathVariable Long slotId,
+            @RequestHeader("Idempotency-Key") String idempotencyKey,
             @Valid @RequestBody CreateBookingRequest request) {
-        return service.createBooking(slotId, request);
+
+        return service.createBooking(slotId, request, idempotencyKey);
     }
 }
