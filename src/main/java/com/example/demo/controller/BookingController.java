@@ -27,4 +27,11 @@ public class BookingController {
 
         return service.createBooking(slotId, request, idempotencyKey);
     }
+
+
+    @DeleteMapping("/{bookingId}")
+    public Booking cancelBooking(@PathVariable Long bookingId) {
+        return service.cancelBooking(bookingId);
+    }
+
 }

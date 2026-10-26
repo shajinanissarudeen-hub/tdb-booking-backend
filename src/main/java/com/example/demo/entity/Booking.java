@@ -18,6 +18,8 @@ public class Booking {
     private String devoteeName;
     private String phoneNumber;
 
+    private boolean cancelled = false;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "slot_id", nullable = false)
     private DarshanSlot slot;
@@ -43,6 +45,14 @@ public class Booking {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public DarshanSlot getSlot() {
