@@ -110,6 +110,16 @@ public class DarshanSlotService {
 
         Booking savedBooking = bookingRepository.save(booking);
 
+        savedBooking.setReceiptNumber(
+                String.format(
+                        "TDB-%d-%06d",
+                        java.time.Year.now().getValue(),
+                        savedBooking.getId()
+                )
+        );
+
+        savedBooking = bookingRepository.save(savedBooking);
+
         // Save the idempotency record in the same transaction
         IdempotencyRecord record = new IdempotencyRecord();
         record.setIdempotencyKey(idempotencyKey);
